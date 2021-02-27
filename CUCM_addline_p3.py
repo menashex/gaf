@@ -18,14 +18,15 @@ elif(len(display) >= 12):
    print("limit is 12 characters. changing to default value...")
    display = "Menash"
 
-print("supported device types...")
+print("\n\nsupported device types...")
 for i in devicelist:
    print(i,end="  ")
 device = input("\nenter device type: Cisco ")
 while(device not in devicelist):
-   device = input("nonexistant device. enter device type: ")
-device = "Cisco " + device
+   device = input("nonexistant device. enter device type: Cisco ")
+ciscodevice = "Cisco " + device
 
+print("\n\n",device, ciscodevice,"\n\n")
 #REQUEST TO API BELOW
 
 url = "https://10.10.20.1:8443/axl/"
@@ -64,7 +65,7 @@ payload = f"""
             <protocol>SCCP</protocol>
             <protocolSide>User</protocolSide>
             <devicePoolName>Default</devicePoolName>
-            <securityProfileName>Cisco 7911 - Standard SCCP Non-Secure Profile</securityProfileName>
+            <securityProfileName>{ciscodevice} - Standard SCCP Non-Secure Profile</securityProfileName>
             <lines>
                <line>
                   <index>1</index>
@@ -89,7 +90,7 @@ payload = f"""
                   <directoryNumber>{line}</directoryNumber>
                </lineIdentifier>
             </lines>
-            <phoneTemplateName>Standard 7911</phoneTemplateName>
+            <phoneTemplateName>Standard {device}</phoneTemplateName>
          </phone>
       </ns:addPhone>
    </soapenv:Body>
