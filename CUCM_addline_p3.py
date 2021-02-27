@@ -50,7 +50,9 @@ payload = f"""
 """
 
 data = requests.post(url=url, headers=headers, data=payload,auth=("administrator","ciscopsdt"), verify=False)
-print(data.text)
+print(data)
+if(data.ok == False):
+   print("number already exists. please try again.")
 
 payload = f"""
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/11.5">
@@ -98,4 +100,6 @@ payload = f"""
 """
 
 data = requests.post(url=url, headers=headers, data=payload,auth=("administrator","ciscopsdt"), verify=False)
-print(data.text)
+print(data)
+if(data.ok == False):
+   print("phone already exists. please try again.")
