@@ -26,7 +26,7 @@ while(device not in devicelist):
    device = input("nonexistant device. enter device type: Cisco ")
 ciscodevice = "Cisco " + device
 
-print("\n\n",device, ciscodevice,"\n\n")
+
 #REQUEST TO API BELOW
 
 url = "https://10.10.20.1:8443/axl/"
@@ -60,7 +60,7 @@ payload = f"""
          <phone>
             <name>SEP{mac}</name>
             <description>{mac} Phone</description>
-            <product>Cisco 7911</product>
+            <product>Cisco {device}</product>
             <class>Phone</class>
             <protocol>SCCP</protocol>
             <protocolSide>User</protocolSide>
