@@ -13,7 +13,7 @@ payload = """
          <line>
             <pattern>2222</pattern>
             <description>testline</description>
-            <usage>Phone line</usage>
+            <usage>Device</usage>
          </line>
       </ns:addLine>
    </soapenv:Body>
