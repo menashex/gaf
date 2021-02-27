@@ -1,19 +1,47 @@
 
 import requests
 
+devicelist = ["3905","3911","3951","6901","6911","6921","6941","6945","6961",
+           "7811","7821","7832","7841","7861","7906","7911"]
+
+mac = input("please enter a device mac address(AAAABBBBCCCC): ")
+while(len(mac)!=12):
+   mac=input("invalid mac address length. enter mac address: ")
+mac=mac.upper()
+
+line = input("please enter phone numer: ")
+
+display = input("enter display name (default: Menash): ")
+if(display == ""):
+   display = "Menash"
+elif(len(display) >= 12):
+   print("limit is 12 characters. changing to default value...")
+   display = "Menash"
+
+print("supported device types...")
+for i in devicelist:
+   print(i,end="  ")
+device = input("\nenter device type: Cisco ")
+while(device not in devicelist):
+   device = input("nonexistant device. enter device type: ")
+device = "Cisco " + device
+
+#REQUEST TO API BELOW
+
 url = "https://10.10.20.1:8443/axl/"
 headers = {}
 
-
-payload = """
+payload = f"""
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/11.5">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:addLine>
          <line>
-            <pattern>2222</pattern>
-            <description>testline</description>
+            <pattern>{line}</pattern>
+            <description>{mac} number</description>
             <usage>Device</usage>
+            <alertingName>{display}</alertingName>
+            <asciiAlertingName>{display}</asciiAlertingName>
          </line>
       </ns:addLine>
    </soapenv:Body>
@@ -23,14 +51,14 @@ payload = """
 data = requests.post(url=url, headers=headers, data=payload,auth=("administrator","ciscopsdt"), verify=False)
 print(data.text)
 
-payload = """
+payload = f"""
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/11.5">
    <soapenv:Header/>
    <soapenv:Body>
       <ns:addPhone>
          <phone>
-            <name>SEPAAAAAAAAAACC</name>
-            <description>test phone</description>
+            <name>SEP{mac}</name>
+            <description>{mac} Phone</description>
             <product>Cisco 7911</product>
             <class>Phone</class>
             <protocol>SCCP</protocol>
@@ -40,13 +68,13 @@ payload = """
             <lines>
                <line>
                   <index>1</index>
-                  <label>Test phone</label>
-                  <display>menash phone</display>
+                  <label>Phone Line</label>
+                  <display>{display}</display>
                   <dirn>
-                     <pattern>2222</pattern>
+                     <pattern>{line}</pattern>
                      <routePartitionName></routePartitionName>
                   </dirn>
-                  <displayAscii>Menash</displayAscii>
+                  <displayAscii>{display}</displayAscii>
                   <e164Mask></e164Mask>
                   <busyTrigger>1</busyTrigger>
                   <callInfoDisplay>
@@ -58,7 +86,7 @@ payload = """
                   <missedCallLogging>true</missedCallLogging>
                </line>
                <lineIdentifier>
-                  <directoryNumber>2222</directoryNumber>
+                  <directoryNumber>{line}</directoryNumber>
                </lineIdentifier>
             </lines>
             <phoneTemplateName>Standard 7911</phoneTemplateName>
