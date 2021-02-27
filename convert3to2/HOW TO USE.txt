@@ -1,0 +1,13 @@
+pip install 3to2
+
+rename 3to2 to 3to2.py (found in the Scripts folder of the Python directory)
+
+Open a terminal window and run 3to2.py -w [file]
+
+
+NB: You will either have to be in the same folder as 3to2.py or 
+provide the full path to it when you try to run it. 
+Same goes for the path to the file you want to convert. 
+The easy way around this is to copy 3to2.py into the folder your py file
+is in and just run the command inside that folder.
+Use 3to2.py --help for info on how the script works.
