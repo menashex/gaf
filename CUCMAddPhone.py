@@ -91,6 +91,7 @@ def AddLine(number, mac, display):
       print("number already exists. please try again.")
       return False  
    print(f"success! created line number {number}")
+   return True
     
 
 ######################### ADDPHONE FUCNTION #########################
@@ -153,6 +154,7 @@ def AddPhone(line,mac,display,device):
         print("\nphone already exists. please try again.")
         return False
    print(f"success! created phone {mac} with number {number}")
+   return True
 
 
 ######################## THIS IS WHERE THE PROGRAM STARTS ########################
@@ -175,4 +177,6 @@ while(addline != True):
 addphone = AddPhone(number,mac,display,device)
 while(addphone != True):
    mac=GetMac()
-   AddPhone
+   AddPhone(number,mac,display,device)
+
+input("\n\npress enter to exit....")
