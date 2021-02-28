@@ -18,6 +18,7 @@ function to get mac address from user and return it to the program formatted wit
 """
 def GetMac():
    mac = input("please enter a device mac address(AAAABBBBCCCC): ")
+   mac = mac.upper()
    while(len(mac)!=12):
       mac=input("invalid mac address length. enter mac address: ")
       mac=mac.upper()
@@ -60,6 +61,12 @@ def GetNumber():
    while(len(number) < 3 or len(number) > 5):
       print("phone number can be 3 to 5 numbers only")
       number = input("please enter a phone number: ")
+   return number
+
+
+
+
+
 
 #################### ADDLINE FUNCTION ############################
 """ 
@@ -166,17 +173,17 @@ def AddPhone(line,mac,display,device):
 
 device = GetDevice()
 mac = GetMac()
-display = GetDisplay()
 number = GetNumber()
+display = GetDisplay()
 
 addline = AddLine(number,mac,display)
 while(addline != True):
    number = GetNumber()
-   AddLine(number,mac,display)
+   addline = AddLine(number,mac,display)
 
 addphone = AddPhone(number,mac,display,device)
 while(addphone != True):
-   mac=GetMac()
-   AddPhone(number,mac,display,device)
+   mac = GetMac()
+   addphone = AddPhone(number,mac,display,device)
 
 input("\n\npress enter to exit....")
