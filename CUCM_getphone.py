@@ -1,4 +1,3 @@
-
 import requests
 
 url = "https://10.10.20.1:8443/axl/"
