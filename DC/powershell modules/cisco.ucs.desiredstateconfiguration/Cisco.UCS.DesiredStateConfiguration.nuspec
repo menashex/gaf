@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Cisco.UCS.DesiredStateConfiguration</id>
+    <version>2.4.1.3</version>
+    <authors>Cisco Systems</authors>
+    <owners>Cisco Systems</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>PowerShell Module for Cisco DSC Resources (DSC module in Cisco PowerTool Suite)</description>
+    <releaseNotes />
+    <copyright>(c) 2018 Cisco Systems, Inc. All rights reserved.</copyright>
+    <tags>PSModule PSIncludes_Function PSFunction_Get-UcsConnection PSFunction_Get-ImcConnection PSCommand_Get-UcsConnection PSCommand_Get-ImcConnection PSIncludes_DscResource PSDscResource_ImcManagedObject PSDscResource_ImcScript PSDscResource_UcsManagedObject PSDscResource_UcsScript PSDscResource_UcsSyncFromBackup PSDscResource_UcsSyncMoWithReference</tags>
+    <dependencies>
+      <dependency id="Cisco.Ucs.Core" />
+      <dependency id="Cisco.UCSManager" />
+      <dependency id="Cisco.IMC" />
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,5 @@
+.\UCS-Inventory-Script.ps1 -UCSM UCS-Cluster-01.cosco.com -OutFile UCS-Cluster-01.html -Username ucsUsername -Password ucsPassword  
+
+
+
+ PowerShell.exe -ExecutionPolicy UnRestricted -File "C:\Users\Menash\Desktop\Cisco-UCS-Inventory-Script-master\Cisco-UCS-Inventory-Script-master\UCS-Inventory-Script.ps1" -UCSM 10.10.20.113 -OutFile Fi.html -Username ucspe -Password ucspe
