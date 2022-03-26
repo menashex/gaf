@@ -2,8 +2,10 @@
 from netmiko import ConnectHandler
 from getpass import getpass
 import sys
+import os
 
 addresses=["10.0.0.13", "10.0.0.14", "10.0.0.15"]
+actions=["1 - find vlan of port","2 - change vlan","3 - show interfaces status","4 - no shut interface","5 - find device","6 - get mac", "7 - DNS lookup", "8 - Shutdown PC", "9 - mipui"]
 
 def connect():
     device = {
@@ -56,14 +58,19 @@ def finddevice():
         "password": password,
         }
         commands = ['do show mac add | inc ' + mac]
-
         print("searching "+i+"...")
         with ConnectHandler(**device) as net_connect:
             output = net_connect.send_config_set(commands)
         if("DYNAMIC" in output):
             print("\n"+output)
+            if("SW1" in output):
+                print("\n###############\nswitch " +i+" is located at B-C05-U24\n###############\n")
+            elif("SW2" in output):
+                print("\n###############\nswitch " +i+" is located at A-C05-U24\n###############\n")
+            elif("SW3" in output):
+                print("\n###############\nswitch " +i+" is located at F-C03-U24\n###############\n")
         else:
-            print("not in "+i+"...")
+            print("not in "+i+".")
     #sys.exit()
 
 def noshut():
@@ -76,31 +83,65 @@ def findvlan():
     command = ['do show int ' + interface + ' switchport | inc Access|Voice']
     return command
 
+def getmac():
+    print()
+    hostname=input("enter ip or hostname: ")
+    os.system('cmd /c "getmac /s "'+hostname)
+
+def nslookup():
+    print()
+    hostname=input("enter ip or hostname: ")
+    os.system('cmd /c "nslookup "'+hostname)
+
+def shutdown():
+    print()
+    hostname=input("enter ip or hostname: ")
+    os.system('cmd /c "shutdown /r /m '+hostname+"\"")
+
+def mipui():
+    for i in addresses:
+        device = {
+        "device_type": "cisco_ios",
+        "host": i, 
+        "username": username,
+        "password": password,
+        }
+        print("\n###################\n Switch "+i+"\n###################\n")
+        commands = ['do show cdp neigh detail | inc ID|Interface|Entry|Management add|IP\n\n']
+        with ConnectHandler(**device) as net_connect:
+            output = net_connect.send_config_set(commands)
+        print(output)
+
 print("######################################\n")
 print("hello and welcome to menashe's script!\n")
 print("######################################\n")
 username=input("please enter username: ")
 password=getpass()
 while(1):
-    print("\n1 - change vlan\n2 - show interface status\n3 - find device\n4 - no shut interface\n5 - find vlan of port")
-    action=int(input("\nwhat would you like to do?: "))
-    while(action <= 0 or action >=6):
-        action=int(input("1 - change vlan\n2 - show interfaces status\n3 - find device\n4 - no shut interface\n5 - find vlan of port: "))
-    if(action == 1):
-        commands=changevlan()
-        ipadd=getip()
-        connect()
-    elif(action == 2):
-        commands=showintbrief()
-        ipadd=getip()
-        connect()
-    elif(action == 3):
+    action=0
+    print()
+    while(action <= 0 or action > len(actions)):
+        for i in actions:
+            print(i)
+        action=int(input("\nwhat would you like to do?: "))
+    if (action == 5):
         commands=finddevice()
-    elif(action == 4):
-        commands=noshut()
-        ipadd=getip()
-        connect()
-    elif(action == 5):
-        commands=findvlan()
+    elif (action == 6):
+        getmac()
+    elif (action == 7):
+        nslookup() 
+    elif (action == 8):
+        shutdown() 
+    elif (action == 9):
+        mipui()
+    else:
+        if(action == 1):
+            commands=findvlan()
+        elif(action == 2):
+            commands=changevlan()
+        elif(action == 3):
+            commands=showintbrief()
+        elif(action == 4):
+            commands=noshut()
         ipadd=getip()
         connect()
